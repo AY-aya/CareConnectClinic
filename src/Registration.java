@@ -31,51 +31,51 @@ public class Registration {
         this.dbUsername = dbUsername;
         this.dbPassword = dbPassword;
     }
-      // Method to initialize the database connection
+
+    // Method to initialize the database connection
     public void initializeDatabaseConnection() throws SQLException {
         connection = DriverManager.getConnection(url, dbUsername, dbPassword);
     }
-    
- // Method to validate user input
-    private void validateUserInput() throws IllegalArgumentException {
-        Scanner scanner = new Scanner(System.in);
 
-        // Get user input for name, email, and password
-        System.out.print("Enter your name: ");
-        name = scanner.nextLine().trim();
-        System.out.print("Enter your email: ");
-        email = scanner.nextLine().trim();
-        System.out.print("Enter your password: ");
-        password = scanner.nextLine().trim();
+    // Method to validate user input
+    private void validateUserInput(String name, String email, String password) throws IllegalArgumentException {
+        // Set inputs to class variables
+        this.name = name.trim();
+        this.email = email.trim();
+        this.password = password.trim();
 
         // Validate name
-        if (name.isEmpty()) {
+        if (this.name.isEmpty()) {
             throw new IllegalArgumentException("Name cannot be empty");
         }
 
         // Validate email
-        if (email.isEmpty()) {
+        if (this.email.isEmpty()) {
             throw new IllegalArgumentException("Email cannot be empty");
-        } else if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+        } else if (!this.email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
             throw new IllegalArgumentException("Invalid email address");
         }
 
         // Validate password
-        if (password.isEmpty()) {
+        if (this.password.isEmpty()) {
             throw new IllegalArgumentException("Password cannot be empty");
-        } else if (!password.matches("^(?=.*\\d)(?=\\S+$).{8,}$")) {
+        } else if (!this.password.matches("^(?=.*\\d)(?=\\S+$).{8,}$")) {
             throw new IllegalArgumentException("Password must be at least 8 characters long, contain at least one digit, one lowercase letter, one uppercase letter, one special character, and no whitespace");
         }
     }
-    
-    // Method to register a new user
-    public Person registerUser() throws IllegalArgumentException, SQLException {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Are you a doctor or an assistant? (doctor/assistant)");
-        String role = scanner.nextLine().trim().toLowerCase();
 
+    // Method to register a new user
+    public Person registerUser(String name, String email, String password, String role) throws IllegalArgumentException, SQLException {
         // Validate user input
-        validateUserInput();
+        validateUserInput(name, email, password);
+
+        // Check if role is valid
+        while (!role.equalsIgnoreCase("doctor") && !role.equalsIgnoreCase("assistant")) {
+            System.out.println("Invalid role. Please enter either 'doctor' or 'assistant'.");
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter your role: ");
+            role = scanner.nextLine().trim().toLowerCase();
+        }
 
         // Generate username based on role
         username = generateUsername(role);
@@ -87,9 +87,9 @@ public class Registration {
 
         // Insert user data into the database
         try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO users (name, email, password, username) VALUES (?, ?, ?, ?)")) {
-            stmt.setString(1, name);
-            stmt.setString(2, email);
-            stmt.setString(3, password);
+            stmt.setString(1, this.name);
+            stmt.setString(2, this.email);
+            stmt.setString(3, this.password);
             stmt.setString(4, username);
             stmt.executeUpdate();
             System.out.println("Registration successful!");
@@ -98,15 +98,13 @@ public class Registration {
             String usernamePrefix = username.substring(0, 2);
             switch (usernamePrefix) {
                 case "dr" -> {
-                    return new Doctor(name, email, password, username);
+                    return new Doctor(this.name, this.email, this.password, username);
                 }
                 case "as" -> {
-                    return new Assistant(name, email, password, username);
+                    return new Assistant(this.name, this.email, this.password, username);
                 }
                 default -> throw new IllegalArgumentException("Invalid username prefix");
             }
-        } finally {
-            scanner.close(); // Close the scanner to prevent resource leak
         }
     }
 
@@ -126,19 +124,18 @@ public class Registration {
     }
 
     // Method to check if username or email already exists in the database
-private boolean existsInDatabase(String targetUsername, String targetEmail) {
-    try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ? OR email = ?")) {
-        stmt.setString(1, targetUsername);
-        stmt.setString(2, targetEmail);
-        try (ResultSet rs = stmt.executeQuery()) {
-            return rs.next();
+    private boolean existsInDatabase(String targetUsername, String targetEmail) {
+        try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ? OR email = ?")) {
+            stmt.setString(1, targetUsername);
+            stmt.setString(2, targetEmail);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error checking user existence in database: " + e.getMessage());
+            return false; // or handle the error accordingly
         }
-    } catch (SQLException e) {
-        System.out.println("Error checking user existence in database: " + e.getMessage());
-        return false; // or handle the error accordingly
     }
-}
-
 
     public static void main(String[] args) {
         String url = "jdbc:mysql://localhost:3306/your_database";
@@ -149,7 +146,22 @@ private boolean existsInDatabase(String targetUsername, String targetEmail) {
 
         try {
             registration.initializeDatabaseConnection();
-            registration.registerUser();
+            Scanner scanner = new Scanner(System.in);
+            // Take input from user
+            System.out.print("Enter your name: ");
+            String name = scanner.nextLine();
+            System.out.print("Enter your email: ");
+            String email = scanner.nextLine();
+            System.out.print("Enter your password: ");
+            String passwordInput = scanner.nextLine();
+            String role;
+            do {
+                System.out.print("Enter your role (doctor/assistant): ");
+                role = scanner.nextLine().trim().toLowerCase();
+            } while (!role.equals("doctor") && !role.equals("assistant"));
+
+            // Register user
+            registration.registerUser(name, email, passwordInput, role);
         } catch (SQLException e) {
             System.out.println("Error initializing database connection: " + e.getMessage());
         } catch (IllegalArgumentException e) {
