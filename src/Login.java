@@ -1,16 +1,14 @@
 
-package com.mycompany.careconnectclinic;
+package management.system;
 
-/**
- *
- * @author FatmaALZahraa
- */
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Login {
 
@@ -21,14 +19,19 @@ public class Login {
     private final String dbPassword;
     private Connection connection;
 
+    
     public Login(String url, String dbUsername, String dbPassword) {
         this.url = url;
         this.dbUsername = dbUsername;
         this.dbPassword = dbPassword;
     }
-
-    public void initializeDatabaseConnection() throws SQLException {
-        connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+   
+    public void initializeDatabaseConnection() {
+        try {
+            connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
   private void validateInput() throws IllegalArgumentException {
         if (username == null || username.isEmpty()) {
@@ -40,14 +43,16 @@ public class Login {
         }
     }
 
-    public Person loginUser() throws IllegalArgumentException {
+    public Person loginUser(String username, String password) throws IllegalArgumentException {
+        this.username= username;
+        this.password= password;
         validateInput();
 
         try {
             if (!existsInDatabase(username, password)) {
                 throw new IllegalArgumentException("Username or password doesn't exist");
             }
-
+            System.out.println("successful login");
             return getUserFromDatabase();
         } catch (SQLException e) {
             System.out.println("Error querying database: " + e.getMessage());
@@ -56,7 +61,7 @@ public class Login {
     }
     
  private boolean existsInDatabase(String targetUsername, String targetPassword) throws SQLException {
-        try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ? AND password = ?")) {
+        try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM person WHERE username = ? AND passwordi = ?")) {
             stmt.setString(1, targetUsername);
             stmt.setString(2, targetPassword);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -66,7 +71,7 @@ public class Login {
     }
   
     private Person getUserFromDatabase() throws SQLException {
-        try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ? AND password = ?")) {
+        try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM person WHERE username = ? AND passwordi = ?")) {
             stmt.setString(1, username);
             stmt.setString(2, password);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -105,41 +110,5 @@ public class Login {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/your_database";
-        String username = "your_username";
-        String password = "your_password";
-
-        Login login = new Login(url, username, password);
-
-        try {
-            login.initializeDatabaseConnection();
-
-            // Set username and password
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Enter your username: ");
-            String usernameInput = scanner.nextLine().trim();
-            System.out.print("Enter your password: ");
-            String passwordInput = scanner.nextLine().trim();
-
-            // Authenticate user
-            login.setUsername(usernameInput);
-            login.setPassword(passwordInput);
-            Person loggedInUser = login.loginUser();
-
-            // Perform actions based on login status
-            if (loggedInUser != null) {
-                System.out.println("Login successful!");
-                // Perform actions for logged-in user (e.g., display user details, navigate to user dashboard, etc.)
-            } else {
-                System.out.println("Login failed. Username or password is incorrect.");
-            }
-        } catch (SQLException e) {
-            System.out.println("Error initializing database connection: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.out.println("Login failed: " + e.getMessage());
-        }
     }
 }
