@@ -1,0 +1,53 @@
+CREATE TABLE person (
+    username VARCHAR(6) PRIMARY KEY ,
+    name VARCHAR(20),
+    passwordi VARCHAR(11),
+    email VARCHAR(30)
+);
+
+DESCRIBE person;
+
+SELECT * FROM person;
+
+
+
+
+
+DROP TABLE IF EXISTS Reservations;
+
+CREATE TABLE Reservations (
+    patient_id VARCHAR(6)  ,
+    datei DATETIME PRIMARY KEY,
+    reservation_type VARCHAR(20),
+    dr_id VARCHAR(20),
+    paid BOOLEAN
+);
+
+DESCRIBE Reservations;
+
+SELECT * FROM Reservations;
+
+
+DROP TABLE IF EXISTS costs;
+
+CREATE TABLE costs (
+    reservation_type VARCHAR(20) PRIMARY KEY ,
+    fees INT
+);
+
+DESCRIBE costs;
+
+SELECT * FROM costs;
+
+
+DROP TABLE IF EXISTS constants;
+
+CREATE TABLE constants (
+    patientidcounter INT ,
+    doctoridcounter INT ,
+    assistantidcounter INT 
+);
+
+DESCRIBE constants;
+
+SELECT * FROM constants;
