@@ -1,5 +1,4 @@
-
-package com.mycompany.careconnectclinic;
+package management.system;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -26,7 +25,7 @@ public class Reservation implements Comparable<Reservation> {
 
     public void saveToDatabase(Connection connection) {
         try {
-            String query ="INSERT INTO reservations (patient_id, date, reservation_type, doctor_id, paid) VALUES (?, ?, ?, ?, ?)";
+            String query ="INSERT INTO Reservations (patient_id, datei, reservation_type, dr_id, paid) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement statement= connection.prepareStatement(query);
             
             statement.setString(1, patientId);
@@ -115,6 +114,11 @@ public class Reservation implements Comparable<Reservation> {
                 '}';
     }
     
+    @Override
+    public int compareTo(Reservation o) {
+        return this.getDate().compareTo(o.getDate());
+    }
+}
     @Override
     public int compareTo(Reservation o) {
         return this.getDate().compareTo(o.getDate());
