@@ -1,4 +1,6 @@
-package com.mycompany.careconnectclinic;
+
+package management.system;
+
 
 import java.sql.*;
 import java.sql.PreparedStatement;
