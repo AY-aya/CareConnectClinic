@@ -1,5 +1,5 @@
 
-package com.mycompany.careconnectclinic;
+package management.system;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +17,10 @@ public class Doctor extends Person {
 
     public String getDoctorID() {
         return doctorID;
+    }
+    
+    public void setDoctorID(String doctorID){
+        this.doctorID=doctorID;
     }
     //done in Person
     /****
@@ -62,4 +66,3 @@ public class Doctor extends Person {
     }
         
 }
-
