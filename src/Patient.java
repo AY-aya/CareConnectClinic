@@ -1,5 +1,4 @@
-package com.mycompany.careconnectclinic;
-
+package management.system;
 public class Patient {
      private String name;
      private String patientID;
@@ -30,7 +29,7 @@ public class Patient {
     public void setAllergies(String allergies) {
         this.allergies = allergies;
     }
-    
+
     public String getHealth_problems() {
         return health_problems;
     }
@@ -66,15 +65,9 @@ public class Patient {
     public String getPatientID() {
         return patientID;
     }
-
-    public void setPatientID(String patientID) {
+     public void setPatientID(String patientID) {
         this.patientID = patientID;
     }
-
-    public static void setPatientIDcounter(int patientIDcounter) {
-        Patient.patientIDcounter = patientIDcounter;
-    }
-
     public String getPhonenumber() {
         return phonenumber;
     }
