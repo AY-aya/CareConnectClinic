@@ -21,8 +21,9 @@ public class Assistant extends Person {
         return assistantID;
     }
     
-    public void Make_Reservation(String patientId, LocalDateTime date, String reservationType, String doctorId, boolean paid){
+    public void Make_Reservation(String patientId, LocalDateTime date, String reservationType, String doctorId, boolean paid, Connection connection){
         Reservation RES =new Reservation(patientId,date,reservationType,doctorId,paid);
+        RES.saveToDatabase(connection);
     }
     
     public Patient Addpatient (String name,String phonenumber ,int age,String gender,Connection connection){
@@ -30,7 +31,7 @@ public class Assistant extends Person {
         String patient_id = patient.getPatientID();
         
         try {
-            String sql = "INSERT INTO patient (patient_Id,name,phone_number, age, gender) VALUES (?, ?, ?, ?,?)";
+            String sql = "INSERT INTO patient (patient_id, name, phone_number, age, gender) VALUES (?, ?, ?, ?,?)";
              
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, patient_id);
@@ -47,21 +48,43 @@ public class Assistant extends Person {
         return patient;
     }
     
-    public Patient Updatepatientinfo (Patient patient, String name,int age, String gender, String phonenumber){
-        System.out.println("Patient ID: " + patient.getPatientID());
-        patient.setName(name);
-        patient.setAge(age);
-        patient.setGender(gender);
-        patient.setPhonenumber(phonenumber); 
+    public Patient Updatepatientinfo (String patientID, String name,int age, String gender, String phonenumber, Connection connection){
+        //update's the patient data in the database 
+        try {
+            // Prepare SQL query to update patient information based on patientID
+            String sql = "UPDATE patient SET name=?, phone_number=?, age=?, gender=? WHERE patient_id=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
+            statement.setString(2, phonenumber);
+            statement.setInt(3, age);
+            statement.setString(4, gender);
+            statement.setString(5, patientID);
+
+            // Execute update
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Patient data updated successfully.");
+            } else {
+                System.out.println("Failed to update patient data. Patient with ID " + patientID + " not found.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle any SQL exceptions
+        }
+        
+        //get the updated patient object to view in gui
+        Patient patient= getPatientByID(patientID, connection);
         return patient;
     }
-    
+    /******** getPatientByID method in Person can be used to view the patient
    public void viewPatientInfo(Patient patient){
         System.out.println("Name: " + patient.getName());
         System.out.println("Patient ID: " + patient.getPatientID());
         System.out.println("Age: " + patient.getAge());
         System.out.println("Gender:" + patient.getGender());
         System.out.println("Phone Number: " + patient.getPhonenumber());
-    }
+    }*************/
+   
+   
 }
     
