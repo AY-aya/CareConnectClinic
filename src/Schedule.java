@@ -1,4 +1,5 @@
-package com.mycompany.careconnectclinic;
+
+package management.system;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
