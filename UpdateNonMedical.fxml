@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="990.0" prefWidth="1322.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="careconnectclinic.UpdatepatientController">
+   <children>
+      <ImageView fitHeight="804.0" fitWidth="1334.0" opacity="0.22">
+         <image>
+            <Image url="@logo.jpeg" />
+         </image>
+      </ImageView>
+      <Button layoutX="1040.0" layoutY="742.0" mnemonicParsing="false" onAction="#UpdatePT" prefHeight="43.0" prefWidth="106.0" text="Save">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="1158.0" layoutY="742.0" mnemonicParsing="false" onAction="#switchtoAMscene" prefHeight="43.0" prefWidth="106.0" text="Menu">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Label layoutX="409.0" layoutY="40.0" prefHeight="39.0" prefWidth="563.0" text="Update Patients' Personal Information " textFill="#aa8c21">
+         <font>
+            <Font name="Bank Gothic Light BT" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="119.0" layoutY="222.0" prefHeight="39.0" prefWidth="136.0" text="Patients' ID:">
+         <font>
+            <Font name="Bell MT" size="21.0" />
+         </font>
+      </Label>
+      <TextField fx:id="IDtext" layoutX="112.0" layoutY="267.0" prefHeight="49.0" prefWidth="220.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Label layoutX="119.0" layoutY="366.0" prefHeight="39.0" prefWidth="136.0" text="Name:">
+         <font>
+            <Font name="Bell MT" size="21.0" />
+         </font>
+      </Label>
+      <TextField fx:id="nametext" layoutX="112.0" layoutY="409.0" prefHeight="50.0" prefWidth="212.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Label layoutX="1000.0" layoutY="213.0" prefHeight="18.0" prefWidth="105.0" text="Age:">
+         <font>
+            <Font name="Bell MT" size="21.0" />
+         </font>
+      </Label>
+      <TextField fx:id="agetext" layoutX="1000.0" layoutY="247.0" prefHeight="50.0" prefWidth="212.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Label layoutX="1000.0" layoutY="366.0" prefHeight="26.0" prefWidth="196.0" text="Phone Number:">
+         <font>
+            <Font name="Bell MT" size="21.0" />
+         </font>
+      </Label>
+      <TextField fx:id="numtext" layoutX="1000.0" layoutY="405.0" prefHeight="50.0" prefWidth="220.0">
+         <font>
+            <Font name="Bell MT" size="20.0" />
+         </font>
+      </TextField>
+      <Label layoutX="112.0" layoutY="527.0" prefHeight="26.0" prefWidth="148.0" text="Gender:">
+         <font>
+            <Font name="Bell MT" size="21.0" />
+         </font>
+      </Label>
+      <TextField fx:id="gendertext" layoutX="112.0" layoutY="568.0" prefHeight="50.0" prefWidth="212.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+   </children>
+</AnchorPane>

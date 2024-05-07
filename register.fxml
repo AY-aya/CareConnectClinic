@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="796.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="careconnectclinic.RegistrationController">
+   <children>
+      <ImageView fitHeight="559.0" fitWidth="784.0" layoutX="6.0" layoutY="6.0" opacity="0.23" pickOnBounds="true" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="6.0">
+         <image>
+            <Image url="@logo.jpeg" />
+         </image>
+      </ImageView>
+      <Label id="txt1" alignment="CENTER" layoutX="-1.0" layoutY="49.0" prefHeight="32.0" prefWidth="802.0" text="Welcome Dr/Assistant " AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-5.600000000000023" AnchorPane.topAnchor="49.0">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <Label id="usernametxt" fx:id="usernametxt" alignment="CENTER" layoutX="197.0" layoutY="458.0" prefHeight="30.0" prefWidth="432.0" text="    " AnchorPane.leftAnchor="197.0" AnchorPane.topAnchor="458.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label id="passwordtxt" fx:id="passwordtxt" layoutX="213.0" layoutY="252.0" text="Password:" AnchorPane.leftAnchor="213.0" AnchorPane.topAnchor="252.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TextField id="passwordfield" fx:id="passwordfield" layoutX="324.0" layoutY="249.0" prefHeight="26.0" prefWidth="222.0" promptText="Create a new password">
+         <font>
+            <Font size="16.0" />
+         </font></TextField>
+      <Button id="RegisterButton2" layoutX="629.0" layoutY="508.0" mnemonicParsing="false" onAction="#handleRegisterButton2" text="Register">
+         <font>
+            <Font size="19.0" />
+         </font></Button>
+      <Label id="nametxt" fx:id="nametxt" layoutX="216.0" layoutY="155.0" text="Name:" AnchorPane.leftAnchor="216.0" AnchorPane.topAnchor="155.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label id="emailtxt" fx:id="emailtxt" layoutX="216.0" layoutY="206.0" text="Email:" AnchorPane.leftAnchor="216.0" AnchorPane.topAnchor="206.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TextField id="emailfield" fx:id="emailfield" layoutX="326.0" layoutY="197.0" prefHeight="26.0" prefWidth="222.0" promptText="Enter your email here">
+         <font>
+            <Font size="16.0" />
+         </font></TextField>
+      <TextField id="namefield" fx:id="namefield" layoutX="324.0" layoutY="152.0" prefHeight="26.0" prefWidth="222.0" promptText="Enter your name here">
+         <font>
+            <Font size="16.0" />
+         </font></TextField>
+      <Circle fill="#aa8c21" layoutX="773.0" layoutY="27.0" radius="49.0" stroke="#aa8c21" strokeType="INSIDE" />
+      <Circle fill="#aa8c21" layoutX="710.0" layoutY="221.0" radius="19.0" stroke="#aa8c21" strokeType="INSIDE" />
+      <Circle fill="#aa8c21" layoutX="648.0" layoutY="86.0" radius="28.0" stroke="#aa8c21" strokeType="INSIDE" />
+      <Circle fill="#aa8c21" layoutX="724.0" layoutY="136.0" radius="14.0" stroke="#aa8c21" strokeType="INSIDE" />
+      <Circle fill="#aa8c21" layoutX="24.0" layoutY="24.0" radius="59.0" stroke="#aa8c21" strokeType="INSIDE" />
+      <Circle fill="#aa8c21" layoutX="69.0" layoutY="136.0" radius="14.0" stroke="#aa8c21" strokeType="INSIDE" />
+      <Circle fill="#aa8c21" layoutX="102.0" layoutY="221.0" radius="19.0" stroke="#aa8c21" strokeType="INSIDE" />
+      <Circle fill="#aa8c21" layoutX="169.0" layoutY="86.0" radius="28.0" stroke="#aa8c21" strokeType="INSIDE" />
+      <Label fx:id="successLabel" alignment="CENTER" layoutX="100.0" layoutY="365.0" prefHeight="30.0" prefWidth="618.0" textFill="#aa8c21">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="roletxt" layoutX="225.0" layoutY="312.0" text="Role">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="rolefield" layoutX="324.0" layoutY="312.0" prefHeight="37.0" prefWidth="222.0" promptText="Enter your role">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </TextField>
+      <Button layoutX="76.0" layoutY="508.0" mnemonicParsing="false" onAction="#switchtoLscene" prefHeight="42.0" prefWidth="106.0" text="Login">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
